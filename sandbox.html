@@ -20,7 +20,7 @@
     <button id="btn-logout" class="btn btn-danger">Logout</button>
   </nav>
   <!--start form login-->
-  <div class="p-3  v-else-if=" " mx-auto shadow" style="max-width: 400px; text-align:center" id="loginContainer">
+  <div class="p-3 mx-auto shadow" v-else-if=" " style="max-width: 400px; text-align:center" id="loginContainer">
     <form id="login-form" action="#" method="post">
       <h3>Login</h3>
 
@@ -66,6 +66,53 @@
     </form>
   </div>
   <!--end form login-->
+
+  <!--form Registrasi-->
+  <div class="p-3 mx-auto shadow" style="max-width: 400px; text-align:center" id="registerContainer">
+    <form id="register-form" action="#" method="post">
+      <h3>Register</h3>
+      <br />
+      <div class="mb-3 form-floating">
+        <input
+          type="text"
+          class="col-sm-6 form-control"
+          placeholder="Budi"
+          id="emailRegister"
+          name="emailRegister"
+        />
+        <label for="emailRegister" class="col-form-label"
+          >Email</label
+        >
+      </div>
+
+      <div class="mb-3 form-floating">
+        <input
+          type="password"
+          class="col-sm-6 form-control"
+          placeholder="Sabar"
+          id="passwordRegister"
+          name="passwordRegister"
+        />
+        <label for="passwordRegister" class="col-form-label"
+          >Password</label
+        >
+      </div>
+
+      <div class="mb-3 p-3">
+        <input
+          type="submit"
+          id="submitRegister"
+          class="btn btn-outline-dark btn-lg"
+          value="Register"
+        />
+      </div>
+      OR
+      <div class="mb-3 p-3 d-flex justify-content-center">
+        <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>
+      </div>
+    </form>
+  </div>
+  <!--end form registrasi-->
 
   <!--kanban board-->
   <div class="container">

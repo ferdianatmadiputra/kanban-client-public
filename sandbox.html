@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style/style.css">
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+  <nav id="navbar" class="navbar navbar-light bg-dark justify-content-between">
+    <a class="navbar-brand text-white">Kanban App</a>
+    <button id="btn-logout" class="btn btn-danger">Logout</button>
+  </nav>
+  <!--start form login-->
+  <div class="p-3  v-else-if=" " mx-auto shadow" style="max-width: 400px; text-align:center" id="loginContainer">
+    <form id="login-form" action="#" method="post">
+      <h3>Login</h3>
+
+      <br />
+      <div class="mb-3 form-floating">
+        <input
+          v-model="dataLogin.email"
+          type="text"
+          class="col-sm-6 form-control"
+          placeholder="Budi"
+          id="emailLogin"
+          name="emailLogin"
+        />
+        <label for="emailLogin" class="col-form-label">Email</label>
+      </div>
+
+      <div class="mb-3 form-floating">
+        <input
+          type="password"
+          v-model="dataLogin.password"
+          class="col-sm-6 form-control"
+          placeholder="Sabar"
+          id="passwordLogin"
+          name="passwordLogin"
+        />
+        <label for="passwordLogin" class="col-form-label"
+          >Password</label
+        >
+      </div>
+
+      <div class="mb-3 p-3">
+        <input
+          type="submit"
+          id="submitLogin"
+          class="btn btn-outline-dark btn-lg"
+          value="Login"
+        />
+      </div>
+      OR
+      <div class="mb-3 p-3 d-flex justify-content-center">
+        <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>
+      </div>
+    </form>
+  </div>
+  <!--end form login-->
+
+  <!--kanban board-->
+  <div class="container">
+
+    <div class="row">
+
+      <!--start per category-->
+      <div class="col-12 col-lg-6 col-xl-3">
+        <div class="card card-border-primary my-5 shadow bg-light">
+
+          <div class="card-header">
+            <h5>Todo</h5>
+          </div>
+          
+          <div class="card-body">
+            <div class="card p-1 shadow-sm my-1">
+              <span>sebuah task</span>
+            </div>
+            <div class="card p-1">
+              <span>sebuah task</span>
+            </div>
+
+        </div>
+        </div>
+      </div>
+      <!--end per category-->
+
+
+      <div class="col-12 col-lg-6 col-xl-3">
+        <div class="card card-border-primary p-3 my-5 shadow"></div>
+      </div>
+      <div class="col-12 col-lg-6 col-xl-3">
+        <div class="card card-border-primary p-3 my-5 shadow"></div>
+      </div>
+      <div class="col-12 col-lg-6 col-xl-3">
+        <div class="card card-border-primary p-3 my-5 shadow"></div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="./main.js"></script>
+
+</body>
+</html>

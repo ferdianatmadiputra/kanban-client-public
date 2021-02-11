@@ -3,7 +3,8 @@ const app = new Vue ({
     data: {
         url: 'http://localhost:3000',
         title: "belajar vue js",
-        page: "home",
+        page: "login",
+        firstName: 'JOKO',
         //list page = 'registrasi', 'login', "organization", "kanban"
         tasks: ["1","2","3"],
         organizations,
@@ -17,6 +18,11 @@ const app = new Vue ({
     },
     //function yang dijalankan ketika ada perubahan state
     method: {
+        postLogin() {
+
+        },
+        //start buat sendiri
+        //////////////////////////////
         addTask () {
             this.tasks.push(this.inputTask);
             this.inputTask = "";

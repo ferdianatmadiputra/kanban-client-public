@@ -44,30 +44,30 @@ $cyan:    #0dcaf0 !default;
 
 // scss-docs-start colors-map
 $colors: (
-  "blue":       $blue,
+  "blue":       #b58900,
   "indigo":     $indigo,
   "purple":     $purple,
   "pink":       $pink,
   "red":        $red,
   "orange":     $orange,
-  "yellow":     $yellow,
-  "green":      $green,
-  "teal":       $teal,
-  "cyan":       $cyan,
-  "white":      $white,
-  "gray":       $gray-600,
-  "gray-dark":  $gray-800
+  "yellow":     #cb4b16,
+  "green":      #2aa198,
+  "teal":       #20c997,
+  "cyan":       #268bd2,
+  "white":      #fdf6e3,
+  "gray":       #839496,
+  "gray-dark":  #073642
 ) !default;
 // scss-docs-end colors-map
-//disini ubah
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-900 !default;
+
+$primary:       #b58900 !default;
+$secondary:     #839496 !default;
+$success:       #2aa198 !default;
+$info:          #268bd2 !default;
+$warning:       #cb4b16 !default;
+$danger:        #d33682 !default;
+$light:         #fdf6e3 !default;
+$dark:          #073642 !default;
 
 // scss-docs-start theme-colors-map
 $theme-colors: (
@@ -207,8 +207,8 @@ $escaped-characters: (
 
 $enable-caret:                true !default;
 $enable-rounded:              true !default;
-$enable-shadows:              false !default;
-$enable-gradients:            false !default;
+$enable-shadows:              true !default;
+$enable-gradients:            true !default;
 $enable-transitions:          true !default;
 $enable-reduced-motion:       true !default;
 $enable-smooth-scroll:        true !default;

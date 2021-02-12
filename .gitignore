@@ -1,1 +1,6 @@
 revue
+style
+node_modules
+dist
+.cache
+

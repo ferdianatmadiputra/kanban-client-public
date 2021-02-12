@@ -18,330 +18,367 @@
 <body style="padding-top: 120px; min-height:100vh;">
   <div id="app" class="justify-content-center">
 
-    <!--navbar-->
-  <nav id="navbar" class="navbar shadow-sm navbar-dark bg-dark justify-content-between px-3 fixed-top">
-    <a class="navbar-brand" id="nav-title">
-      <i class="fas fa-columns"></i>
-      Kanban
-    </a>
-    <div class="d-flex flex-row-reverse">
-      <!-- <div id="btn-logout" class="nav-item nav-link">Logout</div> -->
-      <!-- <img class="mt-1" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true"
-      width="32px" height="32px"> -->
-      <div id="btn-login" class="nav-item nav-link">Login</div>
-      <div id="btn-register" class="nav-item nav-link">Register</div>
-      <div>
+      <!--navbar-->
+    <nav id="navbar" class="navbar shadow-sm navbar-dark bg-dark justify-content-between px-3 fixed-top">
+      <div class="nav-item">
+        <!--on click back to home-->
+        <a class="navbar-brand m-0" id="nav-title">
+            <i class="fas fa-columns"></i>
+            Kanban
+          </a>
       </div>
+      <div class="d-flex flex-row-reverse">
+        <!-- <div id="btn-logout" class="nav-item nav-link">Logout</div> -->
+        <!-- <img class="mt-1" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true"
+        width="32px" height="32px"> -->
+        <div id="btn-login" class="nav-item nav-link">Login</div>
+        <div id="btn-register" class="nav-item nav-link">Register</div>
+        <div>
+        </div>
+      </div>
+    </nav>
+    <!--end navbar-->
+
+    <!--start form login-->
+    <div class="p-3 mx-auto rounded bg-gradient" v-if="page === login" style="max-width: 400px; text-align:center" id="loginContainer">
+      <form id="login-form" v-on:submit.prevent="postLogin" action="#" method="post">
+        <h3 class="">Login</h3>
+
+        <br />
+        <div class="mb-3 form-floating">
+          <input
+            v-model="dataLogin.email"
+            type="text"
+            class="form-control"
+            placeholder="Budi"
+            id="emailLogin"
+            name="emailLogin"
+          />
+          <label for="emailLogin" class="col-form-label">Email</label>
+        </div>
+
+        <div class="mb-3 form-floating">
+          <input
+            type="password"
+            v-model="dataLogin.password"
+            class="form-control"
+            placeholder="Sabar"
+            id="passwordLogin"
+            name="passwordLogin"
+          />
+          <label for="passwordLogin" class="col-form-label"
+            >Password</label
+          >
+        </div>
+
+        <div class="mb-3 p-3">
+          <input
+            type="submit"
+            id="submitLogin"
+            class="btn btn-primary btn-lg "
+            value="Login"
+          />
+        </div>
+        <span class="">
+          OR
+        </span>
+        <div class="mb-3 p-3 d-flex justify-content-center">
+          <div class="g-signin2 mt-3 mb-3" data-onsuccess="onSignIn"></div>
+        </div>
+      </form>
     </div>
-  </nav>
-  <!--end navbar-->
+    <!--end form login-->
 
-  <!--start form login-->
-  <div class="p-3 mx-auto rounded bg-gradient" v-if="page === login" style="max-width: 400px; text-align:center" id="loginContainer">
-    <form id="login-form" v-on:submit.prevent="postLogin" action="#" method="post">
-      <h3 class="">Login</h3>
+    <!--form Registrasi-->
+    <div class="p-3 mx-auto shadow bg-gradient" style="max-width: 400px; text-align:center" id="registerContainer">
+      <form id="register-form" action="#" method="post">
+        <h3>Register</h3>
+        <br />
+        <div class="mb-3 form-floating">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Budi"
+            id="fnRegister"
+            name="fnRegister"
+          />
+          <label for="fnRegister" class="col-form-label"
+            >First Name</label
+          >
+        </div>
+        <div class="mb-3 form-floating">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="quepasa"
+            id="lnRegister"
+            name="lnRegister"
+          />
+          <label for="lnRegister" class="col-form-label"
+            >Last Name</label
+          >
+        </div>
+        <div class="mb-3 form-floating">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Budi"
+            id="emailRegister"
+            name="emailRegister"
+          />
+          <label for="emailRegister" class="col-form-label"
+            >Email</label
+          >
+        </div>
 
-      <br />
-      <div class="mb-3 form-floating">
-        <input
-          v-model="dataLogin.email"
-          type="text"
-          class="form-control"
-          placeholder="Budi"
-          id="emailLogin"
-          name="emailLogin"
-        />
-        <label for="emailLogin" class="col-form-label">Email</label>
-      </div>
+        <div class="mb-3 form-floating">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Sabar"
+            id="passwordRegister"
+            name="passwordRegister"
+          />
+          <label for="passwordRegister" class="col-form-label"
+            >Password</label
+          >
+        </div>
 
-      <div class="mb-3 form-floating">
-        <input
-          type="password"
-          v-model="dataLogin.password"
-          class="form-control"
-          placeholder="Sabar"
-          id="passwordLogin"
-          name="passwordLogin"
-        />
-        <label for="passwordLogin" class="col-form-label"
-          >Password</label
-        >
-      </div>
-
-      <div class="mb-3 p-3">
-        <input
-          type="submit"
-          id="submitLogin"
-          class="btn btn-primary btn-lg "
-          value="Login"
-        />
-      </div>
-      <span class="">
+        <div class="mb-3 p-3">
+          <input
+            type="submit"
+            id="submitRegister"
+            class="btn btn-primary btn-lg"
+            value="Register"
+          />
+        </div>
         OR
-      </span>
-      <div class="mb-3 p-3 d-flex justify-content-center">
-        <div class="g-signin2 mt-3 mb-3" data-onsuccess="onSignIn"></div>
-      </div>
-    </form>
-  </div>
-  <!--end form login-->
-
-  <!--form Registrasi-->
-  <div class="p-3 mx-auto shadow bg-gradient" style="max-width: 400px; text-align:center" id="registerContainer">
-    <form id="register-form" action="#" method="post">
-      <h3>Register</h3>
-      <br />
-      <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Budi"
-          id="fnRegister"
-          name="fnRegister"
-        />
-        <label for="fnRegister" class="col-form-label"
-          >First Name</label
-        >
-      </div>
-      <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="quepasa"
-          id="lnRegister"
-          name="lnRegister"
-        />
-        <label for="lnRegister" class="col-form-label"
-          >Last Name</label
-        >
-      </div>
-      <div class="mb-3 form-floating">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Budi"
-          id="emailRegister"
-          name="emailRegister"
-        />
-        <label for="emailRegister" class="col-form-label"
-          >Email</label
-        >
-      </div>
-
-      <div class="mb-3 form-floating">
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Sabar"
-          id="passwordRegister"
-          name="passwordRegister"
-        />
-        <label for="passwordRegister" class="col-form-label"
-          >Password</label
-        >
-      </div>
-
-      <div class="mb-3 p-3">
-        <input
-          type="submit"
-          id="submitRegister"
-          class="btn btn-primary btn-lg"
-          value="Register"
-        />
-      </div>
-      OR
-      <div class="mb-3 p-3 d-flex justify-content-center">
-        <div class="g-signin2 mb-3 mt-3" data-onsuccess="onSignIn"></div>
-      </div>
-    </form>
-  </div>
-  <!--end form registrasi-->
-
-  <!--home / organizations page-->
-  <div class="container my-3" id="welcome-screen">
-    <h1 class="display-3">
-      Welcome,<br>
-      Joko Quepasa  
-    </h1>
-    <hr class="my-4">
-    <p class="lead fw-bold">Your Organization:</p>
-
-    <div class="row">
-
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light ">
-          <p class="fw-bold fs-3 p-2">
-            Create New Organization
-          </p>
-          <h1>
-            + <i class="fas fa-sitemap"></i>
-          </h1>
+        <div class="mb-3 p-3 d-flex justify-content-center">
+          <div class="g-signin2 mb-3 mt-3" data-onsuccess="onSignIn"></div>
         </div>
-      </div>
-      <!--card per org-->
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
-          <p class="fw-bold fs-3 p-2">
-            Helsibuk
-          </p>
-          <hr class="my-4">
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko sulistyo
-            </div>
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko parto
-            </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
-          <p class="fw-bold fs-3 p-2">
-            Helsibuk
-          </p>
-          <hr class="my-4">
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko sulistyo
-            </div>
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko parto
-            </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
-          <p class="fw-bold fs-3 p-2">
-            Helsibuk
-          </p>
-          <hr class="my-4">
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko sulistyo
-            </div>
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko parto
-            </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
-          <p class="fw-bold fs-3 p-2">
-            Helsibuk
-          </p>
-          <hr class="my-4">
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko sulistyo
-            </div>
-            <div class="row m-2">
-              <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
-              &nbsp;&nbsp;Joko parto
-            </div>
-        </div>
-      </div>
-      <!--end card org-->
-
+      </form>
     </div>
-  </div>
-  <!--end of organizations page-->
+    <!--end form registrasi-->
 
-  <!--kanban board-->
-  <div class="container">
-    <div class="p-1 my-3" id="kanban-title">
-      <h1 style="text-align:center">
-        <!-- <i class="fas fa-thumbtack"></i> -->
-        &nbsp;Organization Name
-      </h1>
-    </div>
-    <!--member information-->
-    <div class="row align-items-center p-2 rounded-pill" id="members">
-      <div class="col-12 col-lg-6 col-xl-3">
-        <h2 class="p-2 mb-0 col-auto rounded-pill border">
-          <i class="fas fa-users"></i>
-        </h2>
-      </div>
+    <!--home / organizations page-->
+    <div class="container my-3" id="welcome-screen">
+      <h2 class="display-4">
+        Welcome,<br>
+        Joko Quepasa  
+      </h2>
+      <hr class="my-4">
+      <p class="lead fw-bold">Your Organization:</p>
 
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="row">
-          <div class="p-2 col">
-            <img src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true"
-            width="32px" height="32px">
-          </div>
-          <div class="p-2 col">
-            <img src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true"
-            width="32px" height="32px">
+      <div class="row">
+
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light ">
+            <p class="fw-bold fs-3 p-2">
+              Create New Organization
+            </p>
+            <h1>
+              + <i class="fas fa-sitemap"></i>
+            </h1>
           </div>
         </div>
-      </div>
-
-      <div class="col-12 col-lg-6 col-xl-3">
-        <form class="form-inline my-2 my-lg-0">
-          <label class="sr-only" for="inlineFormInputGroup">Username</label>
-          <div class="input-group mb-0">
-            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Add new member">
-            <div class="input-group-prepend">
-              <div class="input-group-text">+@</div>
-            </div>
-          </div>
-        </form>
-      </div> 
-
-      <div class="btn btn-dark btn-sm p-2">
-          <i class="far fa-trash-alt"></i>
-          <span>
-            Del Organization
-          </span>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <!--start per category-->
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary my-2 shadow">
-
-          <div class="card-header">
-            <h5>Todo</h5>
-          </div>
-          
-          <div class="card-body">
-            <div class="card p-1 shadow-sm my-1">
-              <span>sebuah task tapi kalo panjang gimana hayo abc def ghj uik</span>
-            </div>
-            <div class="card p-1">
-              <span>sebuah task</span>
-            </div>
-          </div>
-          <div>
-            <div class="card-header text-secondary">
-              + add new task
-          </div>
+        <!--card per org-->
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
+            <p class="fw-bold fs-3 p-2">
+              Helsibuk
+            </p>
+            <hr class="my-4">
+              <div class="row m-2">
+                <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
+                &nbsp;&nbsp;Joko sulistyo
+              </div>
+              <div class="row m-2">
+                <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
+                &nbsp;&nbsp;Joko parto
+              </div>
           </div>
         </div>
-      </div>
-      <!--end per category-->
 
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow"></div>
-      </div>
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow"></div>
-      </div>
-      <div class="col-12 col-lg-6 col-xl-3">
-        <div class="card card-border-primary p-3 my-2 shadow"></div>
-      </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
+            <p class="fw-bold fs-3 p-2">
+              Helsibuk
+            </p>
+            <hr class="my-4">
+              <div class="row m-2">
+                <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
+                &nbsp;&nbsp;Joko sulistyo
+              </div>
+              <div class="row m-2">
+                <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
+                &nbsp;&nbsp;Joko parto
+              </div>
+          </div>
+        </div>
 
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
+            <p class="fw-bold fs-3 p-2">
+              Helsibuk
+            </p>
+            <hr class="my-4">
+
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
+            <p class="fw-bold fs-3 p-2">
+              Helsibuk
+            </p>
+            <hr class="my-4">
+              <div class="row m-2">
+                <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
+                &nbsp;&nbsp;Joko sulistyo
+              </div>
+              <div class="row m-2">
+                <img class="col-2 p-0 m-0" src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true" width="32px" height="32px">
+                &nbsp;&nbsp;Joko parto
+              </div>
+          </div>
+        </div>
+        <!--end card org-->
+
+      </div>
     </div>
+    <!--end of organizations page-->
 
-  </div>
-  </div>
+    <!--kanban page-->
+    <div class="container">
+      <div class="p-1 my-3" id="kanban-title">
+        <h1 style="text-align:center">
+          <!-- <i class="fas fa-thumbtack"></i> -->
+          &nbsp;Organization Name
+        </h1>
+      </div>
+      <!--member information-->
+      <div class="row align-items-center justify-content-between p-2" id="members">
+
+        <!--member list-->
+        <div class="col-auto">
+          <div class="row rounded-pill mx-1 border border-secondary align-items-center justify-content-start">
+
+            <h3 class="p-2 mb-0 col-auto">
+              <i class="fas fa-users"></i>
+            </h3>
+
+            <div class="p-2 mb-0 col-auto">
+              <img src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true"
+              width="32px" height="32px">
+            </div>
+
+            <div class="p-2 mb-0 col-auto">
+              <img src="https://ui-avatars.com/api/?background=random&name=atma+joko&rounded=true"
+              width="32px" height="32px">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <form class="form-inline my-2 my-lg-0">
+            <label class="sr-only" for="inlineFormInputGroup">Username</label>
+            <div class="input-group mb-0">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Add new member">
+              <div class="input-group-prepend">
+                <div class="input-group-text">+@</div>
+              </div>
+            </div>
+          </form>
+        </div> 
+
+        <div class="col-auto">
+          <div class="btn btn-outline-secondary btn-sm p-2">
+              <i class="far fa-trash-alt"></i>
+              <span>
+                Del Organization
+              </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row text-light">
+        <!--start per category-->
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card border-warning my-2 shadow">
+
+            <div class="card-header">
+              <h5 class="text-warning">Backlog</h5>
+            </div>
+            
+            <div class="card-body m-0 p-1">
+
+              <!--sebuah card-->
+              <div class="card p-2 shadow-sm my-1">
+                <p class="mb-2">sebuah task tapi kalo panjang gitu gimana hayo abc def ghj uik</p>
+                <div class=" navbar p-0 mb-0 justify-content-between border-top border-secondary">
+                  <span>
+                    <img src="https://ui-avatars.com/api/?background=random&name=atma+diboko&rounded=true"
+                    width="20px" height="20px">
+                  </span>
+                  <span class="text-secondary">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </div>
+              </div>
+              <!--end of sebuah card-->
+
+              <div class="card p-2 shadow-sm my-1">
+                <span>sebuah task</span>
+              </div>
+
+            </div>
+            <!--button add-->
+            <div>
+              <div class="btn btn-secondary btn-block">
+                + add new task
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--end per category-->
+
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card border-primary my-2 shadow">
+            <div class="card-header">
+              <h5 class="text-warning">Backlog</h5>
+            </div>
+            
+            <div class="card-body m-0 p-1">
+              <!--isi card-->
+            </div>
+
+            <div>
+              <div class="btn btn-secondary btn-block">
+                + add new task
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card border-info my-2 shadow">
+
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+          <div class="card border-success my-2 shadow">
+
+          </div>
+        </div>
+      </div> <!--end of kanban board-->
+
+    </div> <!-- end of kanban page-->
+  </div> <!--div nya si app-->
+
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

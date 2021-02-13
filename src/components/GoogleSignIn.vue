@@ -38,6 +38,7 @@ export default {
         console.log(res, 'masukk');
         localStorage.setItem("access_token", res.data.access_token);
         this.$emit('login-google-success', res.data.access_token);
+        this.$emit('dataUser', res.data.dataUser);
       })
       .catch(err => {
         console.log(err)

@@ -5,6 +5,7 @@
       @navClick="changePage"
     ></Navbar>
     <LoginForm
+      @dataUser="dataUser"
       @loggedIn="changePage"
       :base_url="base_url"
       :page="page"
@@ -28,6 +29,9 @@ export default {
   methods: {
     changePage(dir) {
       this.$emit('changePage', dir); // bisa register, home, login
+    },
+    dataUser(obj) {
+      this.$emit('dataUser', obj);
     }
   }
 };

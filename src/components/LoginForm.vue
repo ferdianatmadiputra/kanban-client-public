@@ -42,6 +42,7 @@
         </span>
         <div class="mb-3 p-3 d-flex justify-content-center">
           <GoogleSignIn
+            @dataUser="dataUser"
             @login-google-success="loginGoogleSuccess"
             :base_url="base_url"></GoogleSignIn>
         </div>
@@ -71,14 +72,15 @@ export default {
     postLogin(){
       console.log(this.loginEmail, this.loginPassword, "dari postlogin")
       axios
-      .post(`${base_url}/user/login`, {
+      .post(`${this.base_url}/user/login`, {
           email: this.loginEmail,
           password: this.loginPassword
       })
       .then(({data}) => {
         console.log({data});
         localStorage.setItem("access_token", data.access_token);
-        this.$emit('loggedIn');
+        this.dataUser(data.dataUser);
+        this.$emit('loggedIn', "home");
         this.resetForm();
         swal("success", "successfully logged in", "success")
       })
@@ -87,6 +89,9 @@ export default {
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })
+    },
+    dataUser (obj) {
+      this.$emit('dataUser', obj)
     },
     loginGoogleSuccess () {
       this.$emit('loggedIn', "home");

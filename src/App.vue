@@ -3,6 +3,7 @@
   <LoginPage
     v-if="page == 'login'"
     @changePage="changePage"
+    @dataUser="insertDataUser"
     :base_url="base_url"
     :page="page"
   ></LoginPage>
@@ -16,7 +17,10 @@
     v-else-if="page === 'home'"
     :organizations="organizations"
     :base_url="base_url"
+    :dataUser="dataUser"
     @changePage="changePage"
+    @newOrgCreated="fetchOrganization"
+    @getKanban="getKanbanPage"
     :page="page"
   ></HomePage>
   <KanbanPage
@@ -44,7 +48,9 @@ export default {
       page: "", // home, login , register, kanban
       organizationId: "",
       organizations: [],
+      orgMembers: [],
       tasks: [],
+      dataUser : {}
     };
   },
   components: {
@@ -57,12 +63,14 @@ export default {
     fetchOrganization () {
       axios({
         method: "GET",
-        url: base_url+"/org",
+        url: this.base_url+"/org",
         headers: {
           access_token: localStorage.getItem("access_token")
         }
       })
       .then(({data})=> {
+        data.reverse();
+        this.orgMembers = data.Users;
         this.organizations = data;
       })
       .catch((err) => {
@@ -73,16 +81,37 @@ export default {
 
     changePage(dir) {
       console.log(dir);
+      if (dir === 'home') {
+        this.fetchOrganization();
+      } else if (dir ==='kanban'){
+        this.organizationId;
+        this.tasks;
+      }
       this.page = dir;
+    },
+    insertDataUser(obj){
+      this.dataUser = obj;
+    },
+    getKanbanPage (orgId) {
+      axios({
+        method: "GET",
+        url: this.base_url+`/org/${orgId}/task`,
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+      .then(({data}) =>{
+        this.tasks=data;
+        changePage('kanban')
+      })
     }
+
+
   },
   created () {
-    if (!localStorage.getItem("access_token")){
-      this.page="login";
-    } else {
-      this.page="home";
-      fetchOrganization();
-    }
+    localStorage.clear();
+    this.page="login";
+
   }
 };
 </script>

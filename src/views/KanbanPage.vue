@@ -8,7 +8,7 @@
       <div class="p-1 my-3" id="kanban-title">
         <h1 style="text-align:center">
           <!-- <i class="fas fa-thumbtack"></i> -->
-          &nbsp;{{currOrg.name}}
+          &nbsp;{{currOrg.name}}&nbsp;Organization's Kanban
         </h1>
       </div>
       <!--member information-->
@@ -33,7 +33,7 @@
 
         <div class="col-auto">
           <form class="form-inline my-2 my-lg-0"
-          @submit.prevent="addMember">
+            @submit.prevent="addMember">
             <label class="sr-only" for="inlineFormInputGroup">Username</label>
             <div class="input-group mb-0">
               <input type="text" 
@@ -66,7 +66,7 @@
           :currOrg="currOrg"
           :dataUser="dataUser"
           :base_url="base_url"
-          @newTaskCreated="newTaskCreated"
+          @updateKanban="updateKanban"
         ></KanbanCategory>
         <!--end per category-->
       </div> <!--end of kanban board-->
@@ -119,11 +119,13 @@ export default {
         // swal("success","new member added", "success");
       })
       .catch((err) => {
+        this.memberToAdd ="";
         swal("error", err.response.data.message,"error")
       })
     },
-    newTaskCreated() {
-      this.$emit('newTaskCreated')
+    updateKanban() {
+      console.log('sampe di kanbancategory')
+      this.$emit('updateKanban')
     }
   }
 }

@@ -10,10 +10,14 @@
 
         <TaskCard 
           v-for="task in tasksPerCategory"
-          :key="task.id"
-          :task="task"
+          :key= "task.id"
+          :task = "task"
+          :category = "category"
+          :currOrg = "currOrg"
+          :base_url = "base_url"
+          @updateKanban="updateKanban"
         ></TaskCard>
-        
+
         <FormNewTask
           v-show="formShow === true"
           :dataUser="dataUser"
@@ -59,7 +63,11 @@ export default {
     },
     newTaskCreated() {
       this.hideTaskForm();
-      this.$emit('newTaskCreated')
+      this.updateKanban();
+    },
+    updateKanban() {
+      console.log('sampe di kanbancategory')
+      this.$emit('updateKanban')
     }
   },
   computed: {

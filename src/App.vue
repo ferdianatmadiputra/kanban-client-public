@@ -32,7 +32,7 @@
     @delOrg="delOrg"
     @addMember="addMember"
     @changePage="changePage"
-    @newTaskCreated="getKanbanPage"
+    @updateKanban="getKanbanPage"
     :orgMembers="orgMembers"
     :tasks="tasks"
   ></KanbanPage>
@@ -101,6 +101,8 @@ export default {
     },
 
     getKanbanPage (orgId) {
+      console.log('sampe di App hoo')
+
       if (!orgId){
         orgId = this.currOrg.id
       }

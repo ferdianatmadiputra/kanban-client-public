@@ -3,4 +3,5 @@ style
 node_modules
 dist
 .cache
+sandbox.js
 

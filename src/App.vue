@@ -26,15 +26,21 @@
   <KanbanPage
     v-else-if="page === 'kanban'"
     :base_url="base_url"
+    :currOrg="currOrg"
     :page="page"
+    @delOrg="delOrg"
+    @addMember="addMember"
     @changePage="changePage"
+    @newTaskCreated="getKanbanPage"
+    :orgMembers="orgMembers"
+    :tasks="tasks"
   ></KanbanPage>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import swal from 'swal'
+import swal from 'sweetalert'
 import HomePage from "./views/HomePage"
 import KanbanPage from "./views/KanbanPage"
 import LoginPage from "./views/LoginPage"
@@ -46,11 +52,11 @@ export default {
     return {
       base_url: "http://localhost:3000",
       page: "", // home, login , register, kanban
-      organizationId: "",
+      dataUser : {},
+      currOrg: {},
       organizations: [],
       orgMembers: [],
       tasks: [],
-      dataUser : {}
     };
   },
   components: {
@@ -70,8 +76,8 @@ export default {
       })
       .then(({data})=> {
         data.reverse();
-        this.orgMembers = data.Users;
         this.organizations = data;
+        console.log(this.organizations, 'from fetch apakah fetch lebih duulu daripada currorg')
       })
       .catch((err) => {
         console.log(err.response.data)
@@ -84,28 +90,84 @@ export default {
       if (dir === 'home') {
         this.fetchOrganization();
       } else if (dir ==='kanban'){
-        this.organizationId;
-        this.tasks;
+        console.log(this.tasks);
       }
       this.page = dir;
     },
+
     insertDataUser(obj){
       this.dataUser = obj;
     },
+
     getKanbanPage (orgId) {
+      if (!orgId){
+        orgId = this.currOrg.id
+      }
       axios({
         method: "GET",
-        url: this.base_url+`/org/${orgId}/task`,
+        url: this.base_url+`/org/${orgId}`,
         headers: {
           access_token: localStorage.getItem("access_token")
         }
       })
-      .then(({data}) =>{
-        this.tasks=data;
-        changePage('kanban')
+      .then(({data})=> {
+        this.currOrg = data;
+        this.orgMembers = data.Users;
+        this.tasks = data.Tasks;
+        this.changePage('kanban')
       })
-    }
+      .catch((err) => {
+        console.log(err.response.data)
+        swal("error", err.response.data.message, "error")
+      })
 
+      // console.log(orgId, '<<< id org, request masuk ke app')
+      // this.fetchOrganization();
+      // this.currOrg = this.organizations.find(org => org.id == orgId);
+      // console.log(this.currOrg,'ini currorg')
+      // this.changePage('kanban');
+    },
+
+    // getTasks () {
+    //   let orgId = this.currOrg.id;
+    //   axios({
+    //     method: "GET",
+    //     url: this.base_url+`/org/${orgId}/task`,
+    //     headers: {
+    //       access_token: localStorage.getItem("access_token")
+    //     }
+    //   })
+    //   .then(({data}) =>{
+    //     console.log(data)
+    //     this.tasks=data;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response.data)
+    //     swal("error", err.response.data.message, "error")
+    //   })
+    // },
+
+    delOrg() {
+      axios({
+        method: "DELETE",
+        url: this.base_url+`/org/${this.currOrg.id}`,
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+      .then((res) => {
+        this.changePage("home")
+        swal("success", res.message)
+      })
+      .catch((err) => {
+        swal("error", err.response.data.message,"error")
+      })
+    },
+
+    addMember(newMemberEmail) {
+      console.log(newMemberEmail,'tes')
+      this.getKanbanPage(this.currOrg.id)
+    }
 
   },
   created () {

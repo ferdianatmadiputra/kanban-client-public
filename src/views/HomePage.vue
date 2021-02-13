@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-12 col-lg-6 col-xl-3">
           <div 
-            @click.prevent="createNewOrg"
+            @click.prevent="showOrgForm"
             class="card card-border-primary p-3 my-2 shadow bg-gradient text-light">
             <p class="fw-bold fs-3 p-2">
               Create New Organization
@@ -40,7 +40,7 @@
           v-for='(organization) in organizations'
           :key="organization.id"
           :organization="organization"
-          @click.prevent="getKanban(`${organization.id}`)"
+          @click.stop.native="getKanban(organization.id)"
         ></OrganizationCard>
       </div>
     </div>
@@ -65,9 +65,9 @@ export default {
   },
   methods: {
     changePage(dir) {
-      this.$emit('changePage', dir); // bisa register, home, login
+      this.$emit('changePage', dir); // bisa logout
     },
-    createNewOrg () {
+    showOrgForm () {
       this.showForm = true;
     },
     hideForm () {
@@ -78,6 +78,7 @@ export default {
       this.$emit("newOrgCreated");
     },
     getKanban(orgId) {
+      console.log(orgId,"DARI HOMEPAGE")
       this.$emit("getKanban", orgId);
     }
 

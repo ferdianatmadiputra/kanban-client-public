@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ferdianatmadiputra/kanban-client#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "swal": "^0.1.0",
     "sweetalert": "^2.1.2",
     "vue": "^2.6.12",
     "vue-google-signin-button": "^1.0.4",

@@ -41,47 +41,65 @@
           OR
         </span>
         <div class="mb-3 p-3 d-flex justify-content-center">
-          <div class="g-signin2 mt-3 mb-3" data-onsuccess="onSignIn"></div>
+          <GoogleSignIn
+            @login-google-success="loginGoogleSuccess"
+            :base_url="base_url"></GoogleSignIn>
         </div>
       </form>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import swal from 'sweetalert';
-import GSignInButton from 'vue-google-signin-button';
-Vue.use(GSignInButton);
+import GoogleSignIn from './GoogleSignIn.vue';
 
 export default {
   name: "LoginForm",
   data () {
     return {
-      name: "",
-      password: ""
+      loginEmail: "",
+      loginPassword: "",
+
     }
+  },
+  props: ["base_url", "page"],
+  components: {
+    GoogleSignIn
   },
   methods: {
     postLogin(){
-      axios({
-        method: "POST",
-        url: "http://localhost:3000/user/login",
-        data: {
-          name: this.name,
-          password: this.password
-        }
+      console.log(this.loginEmail, this.loginPassword, "dari postlogin")
+      axios
+      .post(`${base_url}/user/login`, {
+          email: this.loginEmail,
+          password: this.loginPassword
       })
       .then(({data}) => {
-        localStorage.setItem("access_token", data.access_token)
+        console.log({data});
+        localStorage.setItem("access_token", data.access_token);
         this.$emit('loggedIn');
         this.resetForm();
         swal("success", "successfully logged in", "success")
       })
       .catch(err => {
-        console.log(err);
-        swal("error", err.response, "error")
+        console.log(err.response.data);
+        this.resetForm();
+        swal("error", err.response.data.message, "error")
       })
+    },
+    loginGoogleSuccess () {
+      this.$emit('loggedIn', "home");
+      this.resetForm()
+    },
+    resetForm () {
+      this.loginEmail ="";
+      this.loginPassword = ""
     }
   }
 }
 </script>
+
+<style scoped>
+
+</style>

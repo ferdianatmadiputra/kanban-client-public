@@ -1,5 +1,31 @@
 <template>
-  <h1>{{ message }}</h1>
+  <div>
+  <LoginPage
+    v-if="page == 'login'"
+    @changePage="changePage"
+    :base_url="base_url"
+    :page="page"
+  ></LoginPage>
+  <RegisterPage
+    v-else-if="page == 'register'"
+    @changePage="changePage"
+    :base_url="base_url"
+    :page="page"
+  ></RegisterPage>
+  <HomePage
+    v-else-if="page === 'home'"
+    :organizations="organizations"
+    :base_url="base_url"
+    @changePage="changePage"
+    :page="page"
+  ></HomePage>
+  <KanbanPage
+    v-else-if="page === 'kanban'"
+    :base_url="base_url"
+    :page="page"
+    @changePage="changePage"
+  ></KanbanPage>
+  </div>
 </template>
 
 <script>
@@ -15,10 +41,10 @@ export default {
   data() {
     return {
       base_url: "http://localhost:3000",
-      message: "Hello world",
-      page: "",
+      page: "", // home, login , register, kanban
       organizationId: "",
-      organizations: []
+      organizations: [],
+      tasks: [],
     };
   },
   components: {
@@ -32,7 +58,9 @@ export default {
       axios({
         method: "GET",
         url: base_url+"/org",
-        headers: localStorage.getItem("access_token")
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
       })
       .then(({data})=> {
         this.organizations = data;
@@ -41,6 +69,11 @@ export default {
         console.log(err.response.data)
         swal("error", err.response.data.message, "error")
       })
+    },
+
+    changePage(dir) {
+      console.log(dir);
+      this.page = dir;
     }
   },
   created () {
@@ -48,6 +81,7 @@ export default {
       this.page="login";
     } else {
       this.page="home";
+      fetchOrganization();
     }
   }
 };

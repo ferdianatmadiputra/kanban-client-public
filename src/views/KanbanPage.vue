@@ -65,6 +65,7 @@
           :category="category"
           :currOrg="currOrg"
           :dataUser="dataUser"
+          :base_url="base_url"
           @newTaskCreated="newTaskCreated"
         ></KanbanCategory>
         <!--end per category-->
@@ -86,7 +87,7 @@ export default {
       categories: ['Backlog','Todo','Doing','Done']
     }
   },
-  props: ["currOrg", "base_url", "page", "base_url"],
+  props: ["currOrg", "base_url", "page", "base_url", "dataUser"],
   components: {
     MemberKanban,
     Navbar,

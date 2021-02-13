@@ -82,7 +82,7 @@ export default {
         this.dataUser(data.dataUser);
         this.$emit('loggedIn', "home");
         this.resetForm();
-        swal("success", "successfully logged in", "success")
+        // swal("success", "successfully logged in", "success")
       })
       .catch(err => {
         console.log(err.response.data);

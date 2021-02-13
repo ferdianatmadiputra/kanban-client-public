@@ -9,24 +9,25 @@
       <div class="card-body m-0 p-1">
 
         <TaskCard 
-          v-for="task in tasks"
+          v-for="task in tasksPerCategory"
           :key="task.id"
-          
+          :task="task"
         ></TaskCard>
+        
         <FormNewTask
-          v-show="showForm === true"
+          v-show="formShow === true"
           :dataUser="dataUser"
           :base_url = "base_url"
           :category = "category"
           :currOrg = "currOrg"
           @newTaskCreated = "newTaskCreated"
-          @cancelAdd = "hideForm">
+          @cancelAdd = "hideTaskForm">
         </FormNewTask>
       </div>
       <!--button add-->
       <div>
         <div class="btn btn-secondary btn-block"
-        @click.prevent="addformtask">
+        @click.prevent="showTaskForm">
           + add new task
         </div>
       </div>
@@ -36,6 +37,7 @@
 </template>
 <script>
 import TaskCard from './TaskCard'
+import FormNewTask from './FormNewTask'
 export default {
   name: 'KanbanCategory',
   data () {
@@ -43,9 +45,10 @@ export default {
       formShow: false
     }
   },
-  props : ["category", "currOrg", "dataUser"],
+  props : ["category", "currOrg", "dataUser","base_url"],
   components: {
-    TaskCard
+    TaskCard,
+    FormNewTask
   },
   methods: {
     showTaskForm () {
@@ -61,8 +64,8 @@ export default {
   },
   computed: {
   // getter
-    taskPerCategory: function () {
-      return this.currOrg.tasks.filter((task) => task.category === this.category);
+    tasksPerCategory: function () {
+      return this.currOrg.Tasks.filter((task) => task.category === this.category);
     },
   }
 

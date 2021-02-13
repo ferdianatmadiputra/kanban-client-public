@@ -21,7 +21,7 @@ export default {
   name: "TaskCard",
   data () {
     return {
-
+      task: ""
     }
   },
   props: ["category"]

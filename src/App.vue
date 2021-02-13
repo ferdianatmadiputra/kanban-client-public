@@ -28,6 +28,7 @@
     :base_url="base_url"
     :currOrg="currOrg"
     :page="page"
+    :dataUser="dataUser"
     @delOrg="delOrg"
     @addMember="addMember"
     @changePage="changePage"

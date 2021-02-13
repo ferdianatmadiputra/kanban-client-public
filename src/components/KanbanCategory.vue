@@ -7,16 +7,23 @@
       </div>
       
       <div class="card-body m-0 p-1">
+        <draggable style="min-height:100px;"
+          :list="listTasks"
+          :category="category"
+          group="tasksPerCategory"
+          @change="updateCategory(listTasks, $event)"
+        >
 
-        <TaskCard 
-          v-for="task in tasksPerCategory"
-          :key= "task.id"
-          :task = "task"
-          :category = "category"
-          :currOrg = "currOrg"
-          :base_url = "base_url"
-          @updateKanban="updateKanban"
-        ></TaskCard>
+          <TaskCard 
+            v-for="task in tasksPerCategory"
+            :key= "task.id"
+            :task = "task"
+            :category = "category"
+            :currOrg = "currOrg"
+            :base_url = "base_url"
+            @updateKanban="updateKanban"
+          ></TaskCard>
+        </draggable>
 
         <FormNewTask
           v-show="formShow === true"
@@ -40,19 +47,24 @@
   </div>
 </template>
 <script>
+import draggable from 'vuedraggable'
 import TaskCard from './TaskCard'
 import FormNewTask from './FormNewTask'
+import swal from 'sweetalert'
+import axios from 'axios'
 export default {
   name: 'KanbanCategory',
   data () {
     return {
-      formShow: false
+      formShow: false,
+      listTasks: []
     }
   },
   props : ["category", "currOrg", "dataUser","base_url"],
   components: {
     TaskCard,
-    FormNewTask
+    FormNewTask,
+    draggable
   },
   methods: {
     showTaskForm () {
@@ -68,12 +80,36 @@ export default {
     updateKanban() {
       console.log('sampe di kanbancategory')
       this.$emit('updateKanban')
+    },
+    updateCategory(data, event) {
+      if(event.added) {
+        console.log(event.added,'iini event added<<<<<<');
+        const { element } = event.added;
+        console.log(element);
+        axios({
+          method: "PATCH",
+          url: this.base_url+`/org/${this.currOrg.id}/task/${element.id}`,
+          headers: { access_token: localStorage.getItem("access_token") },
+          data: {
+            category: this.category
+          }
+        })
+        .then(res => {
+          console.log('sukses ganti category>>>',res)
+          this.updateKanban()
+        }).catch(err => {
+          console.log(err);
+          swal("error", err.response.data.message, "error")
+
+        })
+      }
     }
   },
   computed: {
   // getter
     tasksPerCategory: function () {
-      return this.currOrg.Tasks.filter((task) => task.category === this.category);
+      this.listTasks= this.currOrg.Tasks.filter((task) => task.category === this.category);
+      return this.listTasks;
     },
   }
 

@@ -101,7 +101,8 @@ export default {
       })
       .catch( err => {
         this.resetForm();
-        swal("error", err.response.data, "error")
+        console.log(err.response.data)
+        swal("error", err.response.data.message, "error")
       })
     },
     resetForm () {

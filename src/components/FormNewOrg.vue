@@ -54,12 +54,10 @@ export default {
         }
       })
       .then(({data}) => {
-        console.log(data)
         this.$emit('newOrgCreated');
         this.resetForm();
       })
       .catch( err => {
-        console.log(err.response.data);
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })

@@ -26,7 +26,7 @@ export default {
   methods: {
       onSignInSuccess (googleUser) {
       let id_token = googleUser.getAuthResponse().id_token;
-      console.log(id_token, "ini id token");
+      // console.log(id_token, "ini id token");
       axios({
         url: this.base_url+"/user/googlelogin",
         method: "POST",
@@ -35,7 +35,7 @@ export default {
         }
       })
       .then(res => {
-        console.log(res, 'masukk');
+        // console.log(res, 'masukk');
         localStorage.setItem("access_token", res.data.access_token);
         this.$emit('login-google-success', res.data.access_token);
         this.$emit('dataUser', res.data.dataUser);
@@ -47,7 +47,7 @@ export default {
     onSignInError (error) {
       // `error` contains any error occurred.
       console.log('OH NOES', error)
-      swal("error", err.response.data.message, "error")
+      // swal("error", error.response.data.message, "error")
     }
   }
 }

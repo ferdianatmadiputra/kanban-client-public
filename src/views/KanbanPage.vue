@@ -113,7 +113,6 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res,'ini response dari kanbanpage');
         this.$emit('addMember', newmember);
         this.memberToAdd ="";
         // swal("success","new member added", "success");
@@ -124,7 +123,6 @@ export default {
       })
     },
     updateKanban() {
-      console.log('sampe di kanbancategory')
       this.$emit('updateKanban')
     }
   }

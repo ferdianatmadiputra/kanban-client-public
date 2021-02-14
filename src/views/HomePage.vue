@@ -78,7 +78,6 @@ export default {
       this.$emit("newOrgCreated");
     },
     getKanban(orgId) {
-      console.log(orgId,"DARI HOMEPAGE")
       this.$emit("getKanban", orgId);
     }
 

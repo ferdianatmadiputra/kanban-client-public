@@ -70,14 +70,12 @@ export default {
   },
   methods: {
     postLogin(){
-      console.log(this.loginEmail, this.loginPassword, "dari postlogin")
       axios
       .post(`${this.base_url}/user/login`, {
           email: this.loginEmail,
           password: this.loginPassword
       })
       .then(({data}) => {
-        console.log({data});
         localStorage.setItem("access_token", data.access_token);
         this.dataUser(data.dataUser);
         this.$emit('loggedIn', "home");
@@ -85,7 +83,6 @@ export default {
         // swal("success", "successfully logged in", "success")
       })
       .catch(err => {
-        console.log(err.response.data);
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })

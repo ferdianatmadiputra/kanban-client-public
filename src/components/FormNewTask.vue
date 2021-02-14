@@ -71,13 +71,13 @@ export default {
         }
       })
       .then(({data}) => {
-        console.log(data);
+        // console.log(data);
         this.$emit('newTaskCreated');
         this.resetForm();
       })
       .catch( err => {
-        console.log(err.response,"ini isi err<<<<<<<")
-        console.log(err.response.statusText);
+        // console.log(err.response,"ini isi err<<<<<<<")
+        // console.log(err.response.statusText);
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })

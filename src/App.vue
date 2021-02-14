@@ -51,7 +51,7 @@ export default {
   name: "App",
   data() {
     return {
-      base_url: "http://localhost:3000",
+      base_url: "https://kanban-ferd.herokuapp.com",
       page: "", // home, login , register, kanban
       dataUser : {},
       currOrg: {},
@@ -78,10 +78,8 @@ export default {
       .then(({data})=> {
         data.reverse();
         this.organizations = data;
-        console.log(this.organizations, 'from fetch apakah fetch lebih duulu daripada currorg')
       })
       .catch((err) => {
-        console.log(err.response.data)
         swal("error", err.response.data.message, "error")
       })
     },
@@ -101,7 +99,6 @@ export default {
     },
 
     getKanbanPage (orgId) {
-      console.log('sampe di App hoo')
 
       if (!orgId){
         orgId = this.currOrg.id
@@ -120,35 +117,11 @@ export default {
         this.changePage('kanban')
       })
       .catch((err) => {
-        console.log(err.response.data)
         swal("error", err.response.data.message, "error")
       })
 
-      // console.log(orgId, '<<< id org, request masuk ke app')
-      // this.fetchOrganization();
-      // this.currOrg = this.organizations.find(org => org.id == orgId);
-      // console.log(this.currOrg,'ini currorg')
-      // this.changePage('kanban');
     },
 
-    // getTasks () {
-    //   let orgId = this.currOrg.id;
-    //   axios({
-    //     method: "GET",
-    //     url: this.base_url+`/org/${orgId}/task`,
-    //     headers: {
-    //       access_token: localStorage.getItem("access_token")
-    //     }
-    //   })
-    //   .then(({data}) =>{
-    //     console.log(data)
-    //     this.tasks=data;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data)
-    //     swal("error", err.response.data.message, "error")
-    //   })
-    // },
 
     delOrg() {
       axios({
@@ -168,7 +141,6 @@ export default {
     },
 
     addMember(newMemberEmail) {
-      console.log(newMemberEmail,'tes')
       this.getKanbanPage(this.currOrg.id)
     }
 

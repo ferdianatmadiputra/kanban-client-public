@@ -122,13 +122,11 @@ export default {
         }
       })
       .then(({data})=> {
-        console.log(data);
         this.$emit('updateKanban');
         this.resetForm();
         this.showEditForm=false;
       })
       .catch( err => {
-        console.log(err.response,"dari task card")
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })

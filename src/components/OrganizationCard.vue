@@ -31,3 +31,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.card:hover{
+  cursor:pointer;
+}
+</style>

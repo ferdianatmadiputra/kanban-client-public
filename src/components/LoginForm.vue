@@ -1,6 +1,8 @@
 <template>
     <div class="p-3 mx-auto rounded bg-gradient" style="max-width: 400px; text-align:center" id="loginContainer">
-      <form id="login-form" @submit.prevent="postLogin" action="#" method="post">
+      <form id="login-form" 
+        autocomplete="off"
+        @submit.prevent="postLogin" action="#" method="post">
         <h3 class="">Login</h3>
         <br />
         <div class="mb-3 form-floating">
@@ -31,11 +33,15 @@
 
         <div class="mb-3 p-3">
           <input
+            v-if="!isLoading"
             type="submit"
             id="submitLogin"
             class="btn btn-primary btn-lg "
             value="Login"
           />
+          <div v-if="isLoading" class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
         <span class="">
           OR
@@ -61,7 +67,7 @@ export default {
     return {
       loginEmail: "",
       loginPassword: "",
-
+      isLoading: ""
     }
   },
   props: ["base_url", "page"],
@@ -70,12 +76,14 @@ export default {
   },
   methods: {
     postLogin(){
+      this.isLoading = true
       axios
       .post(`${this.base_url}/user/login`, {
           email: this.loginEmail,
           password: this.loginPassword
       })
       .then(({data}) => {
+        this.isLoading = false
         localStorage.setItem("access_token", data.access_token);
         this.dataUser(data.dataUser);
         this.$emit('loggedIn', "home");
@@ -83,6 +91,7 @@ export default {
         // swal("success", "successfully logged in", "success")
       })
       .catch(err => {
+        this.isLoading = false
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })

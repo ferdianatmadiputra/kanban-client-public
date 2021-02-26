@@ -54,7 +54,8 @@ export default {
   name: "HomePage",
   data () {
     return {
-      showForm: false
+      showForm: false,
+      isLoading: false
     }
   },
   props: ["organizations", "dataUser", "page", "base_url"],
@@ -85,3 +86,8 @@ export default {
   
 }
 </script>
+<style scoped>
+.card:hover{
+  cursor:pointer;
+}
+</style>

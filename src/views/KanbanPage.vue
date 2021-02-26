@@ -39,8 +39,18 @@
               <input type="text" 
               v-model="memberToAdd"
               class="form-control" id="inlineFormInputGroup" placeholder="Add new member">
-              <div class="input-group-prepend">
+              <!-- <input type="submit" class="input-group-prepend">
                 <div class="input-group-text">+@</div>
+              </div> -->
+              <input
+                v-if="!isLoading"
+                type="submit"
+                id="submitNewMember"
+                class="input-group-prepend bg-dark text-secondary btn"
+                value="+@"
+              />
+              <div v-if="isLoading" class="spinner-border text-dark" role="status">
+                <span class="visually-hidden">Loading...</span>
               </div>
             </div>
           </form>
@@ -77,6 +87,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert'
+import Swal from 'sweetalert2'
 import MemberKanban from '../components/MemberKanban'
 import Navbar from '../components/Navbar'
 import KanbanCategory from '../components/KanbanCategory'
@@ -84,7 +95,8 @@ export default {
   data () {
     return {
       memberToAdd: "",
-      categories: ['Backlog','Todo','Doing','Done']
+      categories: ['Backlog','Todo','Doing','Done'],
+      isLoading: false
     }
   },
   props: ["currOrg", "base_url", "page", "base_url", "dataUser"],
@@ -102,6 +114,7 @@ export default {
     },
     addMember() {
       let newmember = this.memberToAdd
+      this.isLoading = true
       axios({
         method: "POST",
         url: this.base_url+`/org/${this.currOrg.id}`,
@@ -113,11 +126,14 @@ export default {
         }
       })
       .then((res) => {
+        this.isLoading = false
+        Swal.fire('Success', 'new member added', 'success')
         this.$emit('addMember', newmember);
         this.memberToAdd ="";
         // swal("success","new member added", "success");
       })
       .catch((err) => {
+        this.isLoading = false
         this.memberToAdd ="";
         swal("error", err.response.data.message,"error")
       })
@@ -128,3 +144,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.btn:hover{
+  cursor:pointer;
+}
+</style>

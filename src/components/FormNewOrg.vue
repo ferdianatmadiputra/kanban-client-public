@@ -1,7 +1,8 @@
 <template>
   <div class="col-12 col-lg-6 col-xl-3">
     <div class="card card-border-primary p-3 my-2 shadow bg-gradient text-light bg-dark">
-        <form @submit.prevent="postNewOrg">
+        <form @submit.prevent="postNewOrg"
+          autocomplete="off">
           <div class="mb-3 form-floating">
             <input
               v-model="newOrgName"
@@ -17,11 +18,15 @@
           </div>
           <div class="mb-3 p-3">
             <input
+            v-if="!isLoading"
               type="submit"
               id="submitNewOrg"
               class="btn btn-primary btn-lg"
               value="Create"
             />
+            <div v-if="isLoading" class="spinner-border text-dark" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
             <div class="btn btn-secondary"
               @click.prevent="cancelAdd">
               Cancel
@@ -36,13 +41,15 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      newOrgName: ""
+      newOrgName: "",
+      isLoading: false
     }
   },
   name: "FormNewOrg",
   props: ["dataUser", "base_url"],
   methods: {
     postNewOrg () {
+      this.isLoading = true
       axios({
         url:`${this.base_url}/org`,
         method: "POST",
@@ -54,10 +61,12 @@ export default {
         }
       })
       .then(({data}) => {
+        this.isLoading = false
         this.$emit('newOrgCreated');
         this.resetForm();
       })
       .catch( err => {
+        this.isLoading = false
         this.resetForm();
         swal("error", err.response.data.message, "error")
       })

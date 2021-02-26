@@ -1,6 +1,7 @@
 <template>
   <div  class="card p-2 shadow-sm my-1">
-    <form @submit.prevent="postNewTask">
+    <form @submit.prevent="postNewTask"
+    autocomplete="off">
     <div class="mb-2 form-floating text-dark">
       <input
         v-model="title"
@@ -30,11 +31,15 @@
     <div class=" navbar p-0 mb-0 justify-content-center border-top border-secondary">
       <div class="mb-1 p-2">
         <input
+        v-if="!isLoading"
           type="submit"
           id="submitNewOrg"
           class="btn btn-primary"
           value="Create"
         />
+        <div v-if="isLoading" class="spinner-border text-dark" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
         <div class="btn btn-secondary"
           @click.prevent="cancelAdd">
           Cancel
@@ -52,13 +57,14 @@ export default {
     return {
       assignee: this.dataUser.email,
       title: "",
+      isLoading: false
     }
   },
   props: ["currOrg", "category", "base_url","dataUser"],
   methods: {
     postNewTask () {
-      console.log(this.assignee, this.title,this.category)
-     axios({
+      this.isLoading = true
+      axios({
         url:`${this.base_url}/org/${this.currOrg.id}/task`,
         method: "POST",
         headers: {
@@ -73,12 +79,14 @@ export default {
       .then(({data}) => {
         // console.log(data);
         this.$emit('newTaskCreated');
+        this.isLoading = false;
         this.resetForm();
       })
       .catch( err => {
         // console.log(err.response,"ini isi err<<<<<<<")
         // console.log(err.response.statusText);
         this.resetForm();
+        this.isLoading = false;
         swal("error", err.response.data.message, "error")
       })
     },

@@ -1,6 +1,7 @@
 <template>
       <div class="p-3 mx-auto shadow bg-gradient" style="max-width: 400px; text-align:center" id="registerContainer">
       <form id="register-form" 
+        autocomplete="off"
         @submit.prevent="postRegister" action="#" method="post">
         <h3>Register</h3>
         <br />
@@ -60,11 +61,15 @@
 
         <div class="mb-3 p-3">
           <input
+          v-if="!isLoading"
             type="submit"
             id="submitRegister"
             class="btn btn-primary btn-lg"
             value="Register"
           />
+          <div v-if="isLoading" class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
 
       </form>
@@ -81,13 +86,15 @@ export default {
       fnRegister: "",
       lnRegister: "",
       emailRegister: "",
-      passwordRegister: ""
+      passwordRegister: "",
+      isLoading: false
     }
   },
   props: ["base_url", "page"],
   components: {},
   methods: {
     postRegister () {
+      this.isLoading = true
       axios.post(`${this.base_url}/user/register`, {
         firstName: this.fnRegister,
         lastName: this.lnRegister,
@@ -95,11 +102,13 @@ export default {
         password: this.passwordRegister
       })
       .then(({data}) => {
+        this.isLoading = false
         this.$emit('registerSuccess', 'login');
         this.resetForm();
         swal("success", "your account created, please continue login", "success")
       })
       .catch( err => {
+        this.isLoading = false
         this.resetForm();
         console.log(err.response.data)
         swal("error", err.response.data.message, "error")

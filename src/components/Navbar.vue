@@ -57,8 +57,10 @@ export default {
       this.$emit('navClick', val)
     }
   }
-};
+}
 </script>
 <style scoped>
-
+.nav-item:hover{
+  cursor:pointer;
+}
 </style>

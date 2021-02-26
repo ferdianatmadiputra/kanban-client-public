@@ -3,7 +3,8 @@
     <div class="card border-secondary my-2 shadow">
 
       <div class="card-header">
-        <h5 class="text-secondary">{{category}}</h5>
+        <h5 class="text-secondary">{{category}}
+        </h5>
       </div>
       
       <div class="card-body m-0 p-1">
@@ -22,7 +23,6 @@
             :base_url = "base_url"
             @updateKanban="updateKanban"
           ></TaskCard>
-
         </draggable>
 
         <FormNewTask
@@ -57,7 +57,8 @@ export default {
   data () {
     return {
       formShow: false,
-      listTasks: []
+      listTasks: [],
+      isLoading: false
     }
   },
   props : ["category", "currOrg", "dataUser","base_url"],
@@ -83,6 +84,7 @@ export default {
     updateCategory(data, event) {
       if(event.added) {
         const { element } = event.added;
+        this.isLoading = true
         axios({
           method: "PATCH",
           url: this.base_url+`/org/${this.currOrg.id}/task/${element.id}`,
@@ -92,8 +94,10 @@ export default {
           }
         })
         .then(res => {
+          this.isLoading = false
           this.updateKanban()
         }).catch(err => {
+          this.isLoading = false
           swal("error", err.response.data.message, "error")
 
         })
